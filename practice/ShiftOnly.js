@@ -7,15 +7,16 @@ function Main(input){
 		for(let i = 0; i < num.length; i++){
 			if(num[i] % 2 !== 0 ) {
 				end = true
+				break
 			}
-			ary.push(num[i] % 2)
+			ary.push(num[i] / 2)
 		}
-		if(end) return
+		if(end) return count
 		count++
-		check(ary)
+		return check(ary)
 	}
-	check(num)
-	console.log(count);
+	
+	console.log(check(num));
 }
 
 Main(require("fs").readFileSync("/dev/stdin", "utf8"));
