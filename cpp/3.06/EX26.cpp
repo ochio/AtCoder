@@ -3,7 +3,7 @@ using namespace std;
 
 void Int(map<char, int> &vars){
 	int sum = 0;
-	char var, op;
+	char var;
 	bool flag = true;
 	vector<char> n;
 
@@ -140,13 +140,9 @@ void print_vec(map<char,vector<int>> &varsVec) {
 		if(op.size() > 0){
 			for(int k = 0; k < op.size(); k++){
 				if(op[k] == '+'){
-					for(int j = 0; j < n.size(); j++){
-						ans.at(j) += n.at(j).at(i);
-					}
+					ans.at(i) = n.at(k + 1).at(i) + n.at(k + 2).at(i);
 				}else if(op[k] == '-'){
-					for(int j = 0; j < n.size(); j++){
-						ans.at(j) -= n.at(j).at(i);
-					}
+					ans.at(i) = n.at(k + 1).at(i) - n.at(k + 2).at(i);
 				}
 			}
 		}else{
@@ -155,6 +151,7 @@ void print_vec(map<char,vector<int>> &varsVec) {
 		
 	}
 
+		cout << ans.at(0) << " ";
 
   cout << "[ ";
   for (int i = 0; i < ans.size(); i++) {
