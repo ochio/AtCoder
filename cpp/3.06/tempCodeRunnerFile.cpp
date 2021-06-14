@@ -71,30 +71,22 @@ void print_int(map<char, int> &vars){
 	cout << sum << endl;
 }
 
-void vec(map<char, int> &vars, map<char, vector<int>> &varsVec){
+void vec(map<char, vector<int>> &varsVec){
 	char var;
 	bool flag = true;
 	vector<int> n;
-
 
 	cin >> var;
 	while(flag){
 		char input;
 		cin >> input;
-		if(input == ';'){
-			flag = false;
-			break;
-		}
-
 		if(input == '=' || input == '[' || input == ']' || input == ','){
 			continue;
-		}else if(0 <= input - '0' && input - '0' <= 9){
-			int convertToNum = input - '0';
-			n.push_back(convertToNum);
-		}else{
-			n.push_back(vars[input]);
 		}
+		int convertToNum = input - '0';
+		n.push_back(convertToNum);
 
+		if(input == ';') flag = false;
 	}
 
 	varsVec[var] = n;
@@ -176,7 +168,7 @@ int main(){
 			print_int(vars);
 		}
 		if(order == "vec"){
-			vec(vars,varsVec);
+			vec(varsVec);
 		}
 		if(order == "print_vec"){
 			print_vec(varsVec);
