@@ -1,43 +1,43 @@
 function Main(input){
-	input = input.split("\n");
-	const Q = BigInt(input[0].split(' ')[1])
-	const A = input[1].split(' ').map(v => Number(v))
-	const c = []
+	input = input.trim().split("\n");
+	const Q = BigInt(input[0].trim().split(' ')[1])
+	const A = input[1].trim().split(' ').map(v => parseInt(v))
+	const c = Array(BigInt(A.length)).fill(0)
 	for(let i = 0n ; i < A.length; i++){
 		const toB = BigInt(A[i])
 		const count = toB - (i + BigInt(1))
-		c.push(count)
+		c[i] = count
 	}
 
 	for(let i = 2n; i < (Q + BigInt(2)); i++){
 		const k = BigInt(input[i])
+		const index = bs(c,k)
 		let ans
-		if(c[c.length-1] < k){
+		if(index === c.length){
 			const toB = BigInt(A[A.length -  1])
 			ans = toB + (k - c[c.length-1])
-			
-		}else if(k <= c[c.length-1]){
-			const index = bs(c,k)
-			const toN = Number(A[index])
+		}else{
+			const toN = parseInt(A[index])
 			ans = (BigInt(toN) - BigInt(1)) - (c[index] - k)
 		}
-		ans = ans.toString().replace('n', '')
+		ans = ans.toString()
 		console.log(ans);
 		
 	}
 }
 
-function bs(arr, val, first = 0, last = arr.length){
-	first -= 1; 
+function bs(arr, val){
+	let first = -1; 
+	let last = arr.length
 	while (last - first > 1) {
 		const mid = first + Math.floor((last - first) / 2);
-		if (arr[mid] < val){
-			first = mid;
-		}else{
+		if (arr[mid] >= val){
 			last = mid;
+		}else{
+			first = mid;
 		}
 	}
-	return BigInt(last);
+	return last;
 }
 
 Main(require("fs").readFileSync("/dev/stdin", "utf8"));
