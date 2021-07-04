@@ -8,9 +8,9 @@ function Main(input) {
 	const give = K / N;
 	let ans = new Array(Number(N)).fill(give);
 
-	for (let i = 0; i < K % N; i++) {
-		const idx = ary.indexOf(tmp[i]);
-		ans[idx]++;
+	const b = tmp[(K % N) - 1n];
+	for (let i = 0; i < N; i++) {
+		if (ary[i] <= b) ans[i]++;
 	}
 
 	for (let i = 0; i < ans.length; i++) {
@@ -18,5 +18,4 @@ function Main(input) {
 	}
 }
 
-// Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
-Main(require('fs').readFileSync('./test.txt', 'utf8'));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
