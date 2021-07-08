@@ -9,5 +9,4 @@ if [ ! -d ./$CONTEST ]; then
 fi
 
 touch $CONTEST/test.txt
-touch $CONTEST/$FNAME
 cp template/format.js $CONTEST/$FNAME
