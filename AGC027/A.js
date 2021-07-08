@@ -11,15 +11,15 @@ function Main(input) {
 
 	for (let i = 0; i < ary.length; i++) {
 		sum += ary[i];
+		ans++;
 		if (sum > x) {
-			ans = i;
 			break;
 		}
-		if (i === ary.length - 1 && sum === x) {
-			ans = N;
-		} else {
-			ans = N - 1;
-		}
+	}
+	if (sum === x) {
+		ans = ans;
+	} else {
+		ans--;
 	}
 	console.log(ans);
 }
