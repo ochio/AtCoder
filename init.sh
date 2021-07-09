@@ -1,8 +1,8 @@
 #! /bin/bash
 
-read -p "CONTEST: " CONTEST
+read -p "Contest: " CONTEST
 ## read -p "JavaScript? (y/N): " yn
-read -p "file name?: "  FNAME
+read -p "File name: "  FNAME
 
 if [ ! -d ./$CONTEST ]; then
   mkdir $CONTEST
