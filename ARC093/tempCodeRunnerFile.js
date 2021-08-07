@@ -1,0 +1,1 @@
+Math.abs(ary[i - 1] - ary[i + 1])
