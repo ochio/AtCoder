@@ -4,36 +4,38 @@ function Main(input) {
 	const S = input.trim();
 	const alp = 'abcdefghijklmnopqrstuvwxyz';
 
-	if (S === 'zyxwvutsrqponmlkjihgfedcba') {
-		console.log(-1);
-		return;
-	}
-	const n = [];
+	const t = Array(26).fill(0);
+
 	for (let i = 0; i < S.length; i++) {
-		const idx = alp.indexOf(S[i]);
-		n.push(idx);
+		const c = S[i].charCodeAt() - 97;
+		t[c]++;
 	}
 
-	let ary = [];
-	if (n.length < 26) {
-		for (let i = 0; i < 26; i++) {
-			if (n.indexOf(i) === -1) {
-				n.push(i);
+	let ans = '';
+	for (let i = S.length; i > -1; i--) {
+		const o = S.slice(0, i);
+		const p = S.slice(i);
+		const tmp = Array.from(t);
+		for (let j = 0; j < p.length; j++) {
+			const c = p[j].charCodeAt() - 97;
+			tmp[c]--;
+		}
+
+		const f = tmp.filter((v) => v >= 2).length;
+		if (f > 0) continue;
+		for (let j = 0; j < 26; j++) {
+			if (tmp[j] === 0) {
+				const w = o + alp[j];
+				if (w !== S && w > S) {
+					ans = w;
+					console.log(ans);
+					return;
+				}
 			}
 		}
-		ary = n;
-	} else {
-		for (let i = 0; i < 26; i++) {
-			if (n[i] === 25) continue;
-			let tmp = n.slice().slice(0, i);
-		}
 	}
 
-	ary = ary.map((v) => {
-		return alp[v];
-	});
-	console.log(ary.join(''));
+	console.log(-1);
 }
 
-// Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
-Main(require('fs').readFileSync('./test.txt', 'utf8'));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
