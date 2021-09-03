@@ -1,22 +1,22 @@
-function lowerBound(arr, n) {
+function lowerBound(ary, n) {
 	let first = 0,
-		last = arr.length - 1,
+		last = ary.length - 1,
 		middle;
 	while (first <= last) {
 		middle = 0 | ((first + last) / 2);
-		if (arr[middle] < n) first = middle + 1;
+		if (ary[middle] < n) first = middle + 1;
 		else last = middle - 1;
 	}
 	return first;
 }
 
-function upperBound(arr, n) {
+function upperBound(ary, n) {
 	let first = 0,
-		last = arr.length - 1,
+		last = ary.length - 1,
 		middle;
 	while (first <= last) {
 		middle = 0 | ((first + last) / 2);
-		if (arr[middle] <= n) first = middle + 1;
+		if (ary[middle] <= n) first = middle + 1;
 		else last = middle - 1;
 	}
 	return first;
