@@ -17,57 +17,22 @@ function Main(input) {
 	const c = N - M;
 	let ans = 'No';
 	for (let i = 0; i <= c; i++) {
-		let f = true;
-		for (let j = 0; j < M; j++) {
-			for (let k = 0; k < M; k++) {
-				if (A[j][k + i] !== B[j][k]) {
-					f = false;
+		for (let i2 = 0; i2 <= c; i2++) {
+			let f = true;
+			for (let j = 0; j < M; j++) {
+				for (let k = 0; k < M; k++) {
+					if (A[j + i][k + i2] !== B[j][k]) {
+						f = false;
+						break;
+					}
+				}
+				if (!f) {
 					break;
 				}
 			}
-			if (!f) {
-				break;
+			if (f) {
+				ans = 'Yes';
 			}
-		}
-		if (f) {
-			ans = 'Yes';
-			break;
-		}
-	}
-	for (let i = 0; i <= c; i++) {
-		let f = true;
-		for (let j = 0; j < M; j++) {
-			for (let k = 0; k < M; k++) {
-				if (A[j + i][k] !== B[j][k]) {
-					f = false;
-					break;
-				}
-			}
-			if (!f) {
-				break;
-			}
-		}
-		if (f) {
-			ans = 'Yes';
-			break;
-		}
-	}
-	for (let i = 0; i <= c; i++) {
-		let f = true;
-		for (let j = 0; j < M; j++) {
-			for (let k = 0; k < M; k++) {
-				if (A[j + i][k + i] !== B[j][k]) {
-					f = false;
-					break;
-				}
-			}
-			if (!f) {
-				break;
-			}
-		}
-		if (f) {
-			ans = 'Yes';
-			break;
 		}
 	}
 
