@@ -1,3 +1,4 @@
+// 組み合わせ
 function nCr(n, r) {
 	let ans = 1;
 	for (let i = n; i > n - r; i--) {

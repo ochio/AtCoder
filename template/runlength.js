@@ -1,3 +1,4 @@
+// ランレングス
 const runLength = {
 	compress: function (s) {
 		return s.replace(/([\s\S])\1{0,8}/g, function (a, c) {

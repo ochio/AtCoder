@@ -21,6 +21,8 @@ function upperBound(ary, n) {
 	}
 	return first;
 }
+
+// 二分探索
 function binarySearch(list, num) {
 	var index = -1;
 	var head = 0;

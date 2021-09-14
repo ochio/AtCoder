@@ -1,3 +1,4 @@
+//　優先度付きキュー
 class Pq {
 	constructor() {
 		this.data = [];
