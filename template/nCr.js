@@ -1,5 +1,8 @@
 // 組み合わせ
 function nCr(n, r) {
+	if (n - r < r) {
+		r = n - r;
+	}
 	let ans = 1;
 	for (let i = n; i > n - r; i--) {
 		ans *= i;
