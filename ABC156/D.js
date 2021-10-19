@@ -5,20 +5,14 @@ function Main(input) {
 	const mod = 10n ** 9n + 7n;
 
 	let ans = powMod(2n, n, mod) - 1n;
-	ans -= count(a);
-	ans -= count(b);
+	ans -= nCrMod(n, a, mod);
+	ans -= nCrMod(n, b, mod);
 
-	function count(x) {
-		let res = 1n;
-		for (let i = 0n; i < x; i++) {
-			res *= n - i;
-		}
-		for (let i = 1n; i < x + 1n; i++) {
-			res /= i;
-		}
-		return res;
+	ans %= mod;
+
+	if (ans < 0) {
+		ans += mod;
 	}
-
 	console.log(ans.toString());
 }
 
@@ -33,6 +27,27 @@ function powMod(a, n, b) {
 
 	let res = powMod(a, n / 2n, b);
 	res = (res * res) % b;
+
+	return res;
+}
+
+function nCrMod(n, r, mod) {
+	let res = 1n;
+	for (let i = n - r + 1n; i <= n; i++) {
+		res *= i;
+		res %= mod;
+	}
+
+	for (let i = 2n; i <= r; i++) {
+		res *= powMod(i, mod - 2n, mod);
+		res %= mod;
+	}
+
+	res %= mod;
+
+	if (res < 0) {
+		res += mod;
+	}
 
 	return res;
 }
