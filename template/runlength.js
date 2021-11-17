@@ -11,3 +11,23 @@ const runLength = {
 		});
 	},
 };
+
+const runLength2 = {
+	compress: function (s) {
+		const ary = [];
+		let c = s[0];
+		let n = 1;
+		for (let i = 1; i < s.length; i++) {
+			if (c === s[i]) {
+				n++;
+			} else {
+				ary.push([c, n]);
+				c = s[i];
+				n = 1;
+			}
+		}
+		ary.push([c, n]);
+
+		return ary;
+	},
+};
