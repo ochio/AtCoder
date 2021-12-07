@@ -5,28 +5,34 @@ function Main(input) {
 	const [H, W, C, Q] = input[0].split(' ').map(Number);
 	const colors = Array(C).fill(0);
 	const T = {};
+	const T_done = {};
 	const Y = {};
-	const headW = Array(W).fill(0);
-	const headH = Array(H).fill(0);
+	const Y_done = {};
 
-	for (let i = 0; i < Q; i++) {
+	let T_cnt = 0;
+	let Y_cnt = 0;
+
+	for (let i = Q; i > -1; i--) {
 		const [t, n, c] = input[1 + i].split(' ').map(Number);
-		if (t == 1) {
-			Y[c] = W;
-			headH[n - 1] = c;
-		} else {
-			T[c] = H;
-			headW[n - 1] = c;
+		if (t == 1 && !Y_done[n]) {
+			Y[c] = Y[c] == null ? W - T_cnt : Y[c] + W - T_cnt;
+			Y_done[n] = true;
+			Y_cnt++;
+		} else if (t === 2 && !T_done[n]) {
+			T[c] = T[c] == null ? H - Y_cnt : T[c] + H - Y_cnt;
+			T_done[n] = true;
+			T_cnt++;
 		}
 	}
 
-	console.log(T);
-	console.log(Y);
+	const ans = [];
+	for (let i = 1; i <= C; i++) {
+		const t = T[i] == null ? 0 : T[i];
+		const y = Y[i] == null ? 0 : Y[i];
+		ans.push(t + y);
+	}
+
+	console.log(ans.join(' '));
 }
 
-function generate2DArray(m, n, v = 0) {
-	return [...Array(m)].map(() => Array(n).fill(v));
-}
-
-// Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
-Main(require('fs').readFileSync('./test.txt', 'utf8'));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
