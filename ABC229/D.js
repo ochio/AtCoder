@@ -3,48 +3,38 @@ function Main(input) {
 	const S = input[0];
 	const K = Number(input[1]);
 
-	const cmp = runLength.compress(S);
+	const ary = [];
 
-	let ans = 0;
-	let sum = 0;
-	let cnt = K;
-	for (let i = 0; i < cmp.length; i++) {
-		if (cmp[i][0] === 'X') {
-			sum += cmp[i][1];
-		} else {
-			const n = Math.min(cnt, cmp[i][1]);
-			sum += n;
-			cnt -= n;
-			if (cnt === 0) {
-				sum = n;
-				cnt = K - n;
-			}
-		}
-		ans = Math.max(ans, sum);
+	for (let i = 0; i < S.length; i++) {
+		const t = S[i] === 'X' ? 0 : 1;
+		ary.push(t);
 	}
-	ans = Math.max(ans, sum);
+
+	let s = 0;
+	let e = 0;
+	let cnt = 0;
+	for (let i = 0; i < S.length; i++) {
+		if (ary[i]) {
+			cnt++;
+		}
+		if (cnt === K) {
+			e = i;
+			break;
+		}
+	}
+
+	let ans = e - s + 1;
+	console.log(ans);
+	for (let i = 0; i < ary.length; i++) {
+		while (s <= ary.length - 1 && e - s <= k) {
+			console.log(s);
+			s++;
+		}
+		ans = Math.max(ans, e - s + 1);
+	}
+
 	console.log(ans);
 }
-
-const runLength = {
-	compress: function (s) {
-		const ary = [];
-		let c = s[0];
-		let n = 1;
-		for (let i = 1; i < s.length; i++) {
-			if (c === s[i]) {
-				n++;
-			} else {
-				ary.push([c, n]);
-				c = s[i];
-				n = 1;
-			}
-		}
-		ary.push([c, n]);
-
-		return ary;
-	},
-};
 
 // Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
 Main(require('fs').readFileSync('./test.txt', 'utf8'));
