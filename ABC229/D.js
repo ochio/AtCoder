@@ -3,38 +3,27 @@ function Main(input) {
 	const S = input[0];
 	const K = Number(input[1]);
 
-	const ary = [];
+	const ary = Array(S.length).fill(0);
 
 	for (let i = 0; i < S.length; i++) {
-		const t = S[i] === 'X' ? 0 : 1;
-		ary.push(t);
-	}
-
-	let s = 0;
-	let e = 0;
-	let cnt = 0;
-	for (let i = 0; i < S.length; i++) {
-		if (ary[i]) {
-			cnt++;
-		}
-		if (cnt === K) {
-			e = i;
-			break;
+		if (S[i] === '.') {
+			ary[i + 1] = ary[i] + 1;
+		} else {
+			ary[i + 1] = ary[i];
 		}
 	}
 
-	let ans = e - s + 1;
-	console.log(ans);
-	for (let i = 0; i < ary.length; i++) {
-		while (s <= ary.length - 1 && e - s <= k) {
-			console.log(s);
-			s++;
+	let ans = 0;
+	let r = 0;
+	for (let l = 0; l < ary.length; l++) {
+		while (r < ary.length && ary[r + 1] - ary[l] <= K) {
+			r += 1;
 		}
-		ans = Math.max(ans, e - s + 1);
+
+		ans = Math.max(ans, r - l);
 	}
 
 	console.log(ans);
 }
 
-// Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
-Main(require('fs').readFileSync('./test.txt', 'utf8'));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
