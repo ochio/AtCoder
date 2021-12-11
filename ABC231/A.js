@@ -1,8 +1,10 @@
 'use strict';
 
 function Main(input) {
-	input = input.split('\n');
+    const D = Number(input)
+
+    const ans = D / 100 
+    console.log(ans); 
 }
 
-// Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
-Main(require('fs').readFileSync('./test.txt', 'utf8'));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
