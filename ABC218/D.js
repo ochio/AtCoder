@@ -3,16 +3,28 @@
 function Main(input) {
 	input = input.split('\n');
 	const N = Number(input[0]);
-	const x = {};
-	const y = {};
+	const ary = [];
+	const point = {};
 	for (let i = 0; i < N; i++) {
-		const [p_x, p_y] = input[i + 1].split(' ').map(Number);
-		x[p_x] == null ? (x[p_x] = [[p_x, p_y]]) : x[p_x].push([p_x, p_y]);
-		y[p_y] == null ? (y[p_y] = [[p_x, p_y]]) : y[p_y].push([p_x, p_y]);
+		const [px, py] = input[1 + i].split(' ').map(Number);
+		ary.push([px, py]);
+		point[`${px}-${py}`] = true;
 	}
 
-	console.log(x, y);
+	let ans = 0;
+	for (let i = 0; i < N; i++) {
+		for (let j = 0; j < N; j++) {
+			const [xi, yi] = ary[i];
+			const [xj, yj] = ary[j];
+			if (xi < xj && yi < yj) {
+				if (point[`${xi}-${yj}`] && point[`${xj}-${yi}`]) {
+					ans++;
+				}
+			}
+		}
+	}
+
+	console.log(ans);
 }
 
-// Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
-Main(require('fs').readFileSync('./test.txt', 'utf8'));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
