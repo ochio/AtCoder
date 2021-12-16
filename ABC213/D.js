@@ -14,9 +14,30 @@ function Main(input) {
 		graph.addEdge(A, B);
 	}
 
-	console.log(graph.dfs(1));
-}
+	for (let i = 1; i <= N; i++) {
+		graph.connectedList[i].sort((a, b) => a - b);
+	}
 
+	const ans = [];
+	const stack = [1];
+	const visited = {};
+	visited[1] = true;
+	while (stack.length) {
+		const current = stack.pop();
+		ans.push(current);
+
+		while (graph.connectedList[current].length) {
+			const to = graph.connectedList[current].pop();
+
+			if (visited[to] == null) {
+				stack.push(current);
+				stack.push(to);
+				visited[to] = true;
+			}
+		}
+	}
+	console.log(ans.join(' '));
+}
 class Graph {
 	constructor() {
 		this.connectedList = {};
@@ -30,37 +51,6 @@ class Graph {
 		this.connectedList[v1].push(v2);
 		this.connectedList[v2].push(v1);
 	}
-
-	dfs(start) {
-		const stack = [start];
-
-		const result = [];
-
-		const visited = {};
-
-		let currentVertex;
-
-		visited[start] = true;
-
-		while (stack.length) {
-			stack.sort((a, b) => (a - b > 0 ? -1 : 1));
-			currentVertex = stack.pop();
-
-			result.push(currentVertex);
-			console.log('currentVertex', currentVertex);
-
-			this.connectedList[currentVertex].forEach((neighbor) => {
-				console.log(neighbor);
-				if (!visited[neighbor]) {
-					visited[neighbor] = true;
-					stack.push(neighbor);
-				}
-			});
-			console.log('\n');
-		}
-		return result;
-	}
 }
 
-// Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
-Main(require('fs').readFileSync('./test.txt', 'utf8'));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
