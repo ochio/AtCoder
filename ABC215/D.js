@@ -4,45 +4,48 @@ function Main(input) {
 	input = input.split('\n');
 	const [N, M] = input[0].split(' ').map(Number);
 	const ary = input[1].split(' ').map(Number);
-	const max = Math.max(...ary);
+	const tbl = Array(M + 1).fill(true);
+	const primes = [];
+	function primeFactorization(v) {
+		let value = v;
+		let exponent = 0;
 
-	const p = [];
-	for (let i = 1; i <= max; i++) {
-		const g = gcd(i, max);
-		if (g === 1) {
-			p.push(i);
+		for (let number = 2; number * number <= value; number++) {
+			if (value % number === 0) {
+				exponent = 0;
+				while (value % number === 0) {
+					exponent++;
+					value /= number;
+				}
+
+				primes.push(number);
+			}
+		}
+		if (value !== 1) {
+			primes.push(value);
 		}
 	}
 
-	let ans = 0;
-	const num = [];
+	for (let i = 0; i < N; i++) {
+		primeFactorization(ary[i]);
+	}
+
+	tbl[0] = false;
+	const p = Array.from(new Set(primes));
 
 	for (let i = 0; i < p.length; i++) {
-		const time = p[i];
-
-		for (let t = time; t <= M; t += max) {
-			let cnt = 0;
-			for (let j = 0; j < N; j++) {
-				const tmp = t % ary[j];
-				if (gcd(tmp, ary[j]) === 1) {
-					cnt++;
-				}
-			}
-			if (cnt === N) {
-				num.push(t);
-				ans++;
-			}
+		for (let j = p[i]; j <= M; j += p[i]) {
+			tbl[j] = false;
 		}
 	}
 
-	console.log(ans);
-	for (let i = 0; i < num.length; i++) {
-		console.log(num[i]);
+	const sum = tbl.filter((v) => v).length;
+	console.log(sum);
+	for (let i = 0; i <= M; i++) {
+		if (tbl[i]) {
+			console.log(i);
+		}
 	}
-}
-
-function gcd(a, b) {
-	return b === 0 ? a : gcd(b, a % b);
 }
 
 Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
