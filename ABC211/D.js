@@ -1,66 +1,53 @@
 'use strict';
-let ans = 0;
-class Graph {
-	constructor() {
-		this.connectedList = {};
-	}
-
-	addVertex(vertex) {
-		this.connectedList[vertex] = [];
-	}
-
-	addEdge(v1, v2) {
-		this.connectedList[v1].push(v2);
-		this.connectedList[v2].push(v1);
-	}
-
-	dfs(start, goal) {
-		const stack = [start];
-
-		const result = [];
-
-		const visited = {};
-
-		let currentVertex;
-
-		visited[start] = true;
-
-		while (stack.length) {
-			currentVertex = stack.pop();
-
-			result.push(currentVertex);
-
-			this.connectedList[currentVertex].forEach((neighbor) => {
-				if (neighbor === goal) ans++;
-				if (!visited[neighbor]) {
-					visited[neighbor] = true;
-					stack.push(neighbor);
-				}
-			});
-		}
-		return result;
-	}
-}
-
-const graph = new Graph();
 
 function Main(input) {
 	input = input.split('\n');
 	const [N, M] = input[0].split(' ').map(Number);
-	const d = 10 ** 9 + 7;
-	Array(N)
-		.fill(0)
-		.forEach((v, i) => {
-			graph.addVertex(i + 1);
-		});
+	const mod = 10 ** 9 + 7;
+
+	const g = [...Array(M + 1)].map(() => Array(0));
 
 	for (let i = 0; i < M; i++) {
-		const [A, B] = input[i + 1].split(' ').map(Number);
-		graph.addEdge(A, B);
+		let [a, b] = input[1 + i].split(' ').map(Number);
+		a--, b--;
+		g[a].push(b);
+		g[b].push(a);
 	}
 
-	graph.dfs(1, N);
-	console.log(ans % d);
+	const dist = Array(N).fill(Infinity);
+	const q = [];
+	q.push(0);
+	dist[0] = 0;
+	const vs = [];
+	while (q.length) {
+		const v = q.pop();
+		vs.push(v);
+		for (let i = 0; i < g[v].length; i++) {
+			if (dist[g[v][i]] !== Infinity) continue;
+			dist[g[v][i]] = dist[v] + 1;
+			q.push(g[v][i]);
+		}
+	}
+
+	const dp = Array(N).fill(0);
+	dp[0] = 1;
+	console.log(dist);
+	for (let i = 0; i < vs.length; i++) {
+		const v = vs[i];
+		for (let j = 0; j < g[v].length; j++) {
+			const u = g[v][j];
+			if (dist[u] === dist[v] + 1) {
+				console.log(u, v);
+				dp[u] += dp[v];
+				dp[u] %= mod;
+				console.log(dp);
+			}
+		}
+	}
+
+	console.log(dp);
+
+	console.log(dp[N - 1]);
 }
 
 // Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
