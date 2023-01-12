@@ -1,43 +1,39 @@
-function Main(input){
-	input = input.trim().split("\n");
-	const Q = BigInt(input[0].trim().split(' ')[1])
-	const A = input[1].trim().split(' ').map(v => parseInt(v))
-	const c = Array(BigInt(A.length)).fill(0)
-	for(let i = 0n ; i < A.length; i++){
-		const toB = BigInt(A[i])
-		const count = toB - (i + BigInt(1))
-		c[i] = count
+function Main(input) {
+	input = input.trim().split('\n');
+	const [N, Q] = input[0].split(' ').map(Number);
+	const ary = input[1].split(' ').map(BigInt);
+
+	const cs = [ary[0] - 1n];
+
+	for (let i = 1; i < ary.length; i++) {
+		const s = cs[i - 1] + (ary[i] - 1n - ary[i - 1]);
+		cs.push(s);
 	}
 
-	for(let i = 2n; i < (Q + BigInt(2)); i++){
-		const k = BigInt(input[i])
-		const index = bs(c,k)
-		let ans
-		if(index === c.length){
-			const toB = BigInt(A[A.length -  1])
-			ans = toB + (k - c[c.length-1])
-		}else{
-			const toN = parseInt(A[index])
-			ans = (BigInt(toN) - BigInt(1)) - (c[index] - k)
+	for (let i = 0; i < Q; i++) {
+		const K = BigInt(input[2 + i]);
+
+		let ans;
+		if (cs[N - 1] < K) {
+			ans = ary[N - 1] + (K - cs[N - 1]);
+		} else {
+			const n = lowerBound(cs, K);
+			ans = ary[n] - 1n - (cs[n] - K);
 		}
-		ans = ans.toString()
-		console.log(ans);
-		
+		console.log(ans.toString());
 	}
 }
 
-function bs(arr, val){
-	let first = -1; 
-	let last = arr.length
-	while (last - first > 1) {
-		const mid = first + Math.floor((last - first) / 2);
-		if (arr[mid] >= val){
-			last = mid;
-		}else{
-			first = mid;
-		}
+function lowerBound(ary, n) {
+	let first = 0,
+		last = ary.length - 1,
+		middle;
+	while (first <= last) {
+		middle = 0 | ((first + last) / 2);
+		if (ary[middle] < n) first = middle + 1;
+		else last = middle - 1;
 	}
-	return last;
+	return first;
 }
 
-Main(require("fs").readFileSync("/dev/stdin", "utf8"));
+Main(require('fs').readFileSync('/dev/stdin', 'utf8'));
