@@ -1,19 +1,30 @@
 N, K = map(int, input().split())
-A = list(map(int, input().split()))
-B = list(map(int, input().split()))
+nums = list(map(int, input().split()))
 
-dp = [[False] * 2 for _ in range(N)]
+t = [[(10**9) + 1] * (N // K + 1) for _ in range(K)]
 
-dp[0][0], dp[0][1] = True, True
+j = 0
+for i in range(N):
+    t[i % K][j] = nums[i]
+    if i != 0 and i % K == K - 1:
+        j += 1
 
-for i in range(1, N):
-    a1 = abs(A[i - 1] - A[i]) <= K and dp[i - 1][0]
-    a2 = abs(B[i - 1] - A[i]) <= K and dp[i - 1][1]
-    dp[i][0] = a1 or a2
+for i in range(len(t)):
+    t[i].sort()
 
-    b1 = abs(A[i - 1] - B[i]) <= K and dp[i - 1][0]
-    b2 = abs(B[i - 1] - B[i]) <= K and dp[i - 1][1]
-    dp[i][1] = b1 or b2
+ans = True
+b = 0
+for i in range(len(t[0])):
+    for j in range(K):
+        if t[j][i] == 1000000001:
+            break
+        if i == 0 and j == 0:
+            b = t[j][i]
+        else:
+            if b > t[j][i]:
+                ans = False
+                break
+            b = t[j][i]
 
-ans = dp[N - 1][0] or dp[N - 1][1]
+
 print("Yes" if ans else "No")
