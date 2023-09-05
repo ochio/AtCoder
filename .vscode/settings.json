@@ -1,0 +1,19 @@
+{
+	"files.associations": {
+		"bitset": "cpp"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode" // デフォルトフォーマッターをPrettierに指定
+	},
+	"editor.formatOnSave": true, // ファイル保存時の自動フォーマット有効
+	"editor.formatOnType": true, // 文字入力行の自動フォーマット有効
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true, // ファイル保存時に ESLint でフォーマット
+		"source.organizeImports": true
+	},
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.black-formatter",
+	},
+	"python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+	"black-formatter.args": ["--line-length", "100"],
+}
